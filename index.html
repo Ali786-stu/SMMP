@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Social Media Management Process</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --blue: #4472C4;
+    --blue-dark: #2E52A0;
+    --purple: #6C4CE0;
+    --green: #1FA35A;
+    --orange: #F5941F;
+    --indigo: #1F4FD9;
+    --ink: #1E2233;
+    --muted: #5B6072;
+    --bg: #F5F6FA;
+    --card: #FFFFFF;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ===== Marquee Header ===== */
+  .marquee-wrap{
+    background: linear-gradient(90deg, var(--blue-dark), var(--blue));
+    overflow:hidden;
+    white-space:nowrap;
+    padding:22px 0;
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  }
+  .marquee-track{
+    display:inline-block;
+    padding-left:100%;
+    animation: scroll-left 16s linear infinite;
+  }
+  .marquee-track span{
+    color:#fff;
+    font-size:26px;
+    font-weight:700;
+    letter-spacing:3px;
+    margin-right:80px;
+  }
+  @keyframes scroll-left{
+    0%{ transform: translateX(0); }
+    100%{ transform: translateX(-100%); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation: none; padding-left:0; }
+  }
+
+  /* ===== Vertical Stack ===== */
+  .stack{
+    flex: 1;
+    width: 100%;
+    max-width:1100px;
+    margin:40px auto 60px;
+    padding:0 20px;
+  }
+
+  .month-block{
+    margin-bottom:14px;
+  }
+
+  .month-btn{
+    width:100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding:16px 20px;
+    background: var(--blue);
+    color:#fff;
+    border:2px solid var(--blue-dark);
+    border-radius:6px;
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-align:center;
+    display:block;
+  }
+  .month-btn:hover{
+    transform: translateY(-2px);
+    box-shadow:0 8px 18px rgba(68,114,196,0.3);
+  }
+  .month-btn.active{
+    background: var(--blue-dark);
+    box-shadow:0 6px 16px rgba(46,82,160,0.4);
+  }
+
+  /* Content that opens directly below its button */
+  .month-content{
+    display:none;
+    margin-top:14px;
+    animation: fadeDown .35s ease;
+  }
+  .month-content.open{
+    display:block;
+  }
+  @keyframes fadeDown{
+    from{ opacity:0; transform: translateY(-8px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  /* ===== Step flow (used inside Month 1) ===== */
+  .step-flow{
+    position: relative;
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    scrollbar-width: none; /* Firefox */
+  }
+  .step-flow::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+  .step-item{
+    background:#fff;
+    border:2px solid var(--purple);
+    border-radius:14px;
+    transition: all .35s ease;
+    overflow:hidden;
+  }
+  .step-item.gone{
+    display:none;
+  }
+  .step-item.expanded{
+    flex: 0 0 310px;
+    max-width: calc(100vw - 125px);
+    padding:16px 18px;
+    scroll-snap-align: start;
+  }
+  .step-item.collapsed{
+    display:none;
+  }
+  .step-item h3{
+    margin:0 0 10px;
+    font-size:14px;
+    font-weight:700;
+    color:var(--purple);
+    white-space:normal;
+  }
+  .step-item .step-short{
+    display:none;
+    font-size:13px;
+    font-weight:700;
+    color:var(--purple);
+    text-align:center;
+  }
+  .step-item.collapsed h3,
+  .step-item.collapsed .step-detail{
+    display:none;
+  }
+  .step-item.collapsed .step-short{
+    display:block;
+  }
+  .step-item ul{
+    margin:0;
+    padding-left:18px;
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .step-item ul ul{
+    margin-top:4px;
+  }
+
+  .step-circle{
+    flex-shrink:0;
+    align-self:center;
+    scroll-snap-align: center;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:var(--purple);
+    color:#fff;
+    border:3px solid var(--blue-dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:12px;
+    text-align:center;
+    cursor:pointer;
+    box-shadow:0 6px 14px rgba(108,76,224,0.35);
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .step-circle:hover{
+    transform: scale(1.08);
+    box-shadow:0 8px 18px rgba(108,76,224,0.5);
+  }
+  .step-circle.hidden{
+    visibility:hidden;
+  }
+
+  .step-dots{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:16px;
+  }
+  .dot{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#E3E6F0;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition: all .2s ease;
+  }
+  .dot.active{
+    background:var(--purple);
+    color:#fff;
+    border-color:var(--blue-dark);
+    transform:scale(1.1);
+  }
+
+  /* ===== Simple content card (Month 2 / 3 / Entry) ===== */
+  .simple-card{
+    background:#fff;
+    border-radius:14px;
+    padding:18px 20px;
+    margin: 0 auto 12px auto;
+    max-width: 420px;
+  }
+  .simple-card h3{
+    margin:0 0 10px;
+    font-size:15px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .simple-card ul{
+    margin:0;
+    padding-left:18px;
+    font-size:13.5px;
+    color:var(--muted);
+    line-height:1.7;
+  }
+  .simple-card ul.icon-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .simple-card ul.icon-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .simple-card ul.icon-list li i {
+    margin-top: 3px;
+    opacity: 0.85;
+  }
+  .accent-green{ border:2px solid var(--green); }
+  .accent-green h3{ color:var(--green); }
+  .accent-orange{ border:2px solid var(--orange); }
+  .accent-orange h3{ color:var(--orange); }
+  .accent-blue{ border:2px solid var(--indigo); }
+  .accent-blue h3{ color:var(--indigo); }
+
+  .ongoing-list{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .ongoing-item{
+    background:#fff;
+    border:1px solid #E3E6F0;
+    border-radius:8px;
+    padding:10px 14px;
+    font-size:13.5px;
+    font-weight:600;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .ongoing-item .num{
+    font-size:11px;
+    color:var(--indigo);
+    font-weight:700;
+    background:#EAF0FD;
+    border-radius:50%;
+    width:22px;
+    height:22px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .ongoing-item .ongoing-icon {
+    font-size: 14px;
+    color: var(--indigo);
+    background: #EAF0FD;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* ===== Footer ===== */
+  .footer{
+    width: 100%;
+    background: linear-gradient(90deg, var(--blue-dark), var(--blue));
+    color:#fff;
+    padding:24px 30px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+  }
+  .footer .tagline{
+    font-size:16px;
+    font-weight:700;
+    line-height:1.6;
+  }
+  .footer .quote{
+    font-size:14px;
+    font-style:italic;
+    max-width:420px;
+    opacity:0.95;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Marquee Header -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span>SOCIAL MEDIA MANAGEMENT PROCESS</span>
+      <span>SOCIAL MEDIA MANAGEMENT PROCESS</span>
+    </div>
+  </div>
+
+  <!-- Vertical accordion stack -->
+  <div class="stack">
+
+    <!-- MONTH 1 -->
+    <div class="month-block">
+      <button class="month-btn" data-month="1">MONTH 1</button>
+      <div class="month-content" id="content-1">
+        <div class="step-flow" id="stepFlow1">
+          <div class="step-item expanded" id="step1" data-step="1">
+            <span class="step-short">Step 1</span>
+            <h3><i class="fa-solid fa-gear"></i> Step 1: Platform Setup</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Create/Optimize Instagram Professional Account</li>
+                <li>Create/Optimize Facebook Business Page</li>
+                <li>Complete Profile Information
+                  <ul>
+                    <li>Logo</li>
+                    <li>Bio</li>
+                    <li>Contact Details</li>
+                    <li>Website Link</li>
+                    <li>Address</li>
+                  </ul>
+                </li>
+                <li>Add CTA Buttons (Call, WhatsApp, Email etc.)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-item gone" id="step2" data-step="2">
+            <span class="step-short">Step 2</span>
+            <h3><i class="fa-solid fa-user"></i> Step 2: Profile Optimization</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Design Profile Picture &amp; Cover Image</li>
+                <li>Create Instagram Highlight Covers</li>
+                <li>Organize Highlights
+                  <ul>
+                    <li>Admissions</li>
+                    <li>Facilities</li>
+                    <li>Achievements</li>
+                    <li>Events</li>
+                    <li>Results</li>
+                    <li>Testimonials</li>
+                  </ul>
+                </li>
+                <li>Set up Link in Bio</li>
+                <li>Create Branded Story Highlights</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-item gone" id="step3" data-step="3">
+            <span class="step-short">Step 3</span>
+            <h3><i class="fa-solid fa-pencil"></i> Step 3: Initial Content</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Design Welcome Posts</li>
+                <li>Upload Introductory Stories</li>
+                <li>Fill Highlights with Useful Information</li>
+                <li>Make the Profile Look Complete &amp; Trustworthy Before Promotion</li>
+              </ul>
+            </div>
+          </div>
+          <button class="step-circle" id="stepCircle1" data-next="2">Step 2</button>
+        </div>
+        <div class="step-dots" id="stepDots1">
+          <span class="dot active" data-goto="1">1</span>
+          <span class="dot" data-goto="2">2</span>
+          <span class="dot" data-goto="3">3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTH 2 -->
+    <div class="month-block">
+      <button class="month-btn" data-month="2">MONTH 2</button>
+      <div class="month-content" id="content-2">
+        <div class="simple-card accent-green">
+          <h3><i class="fa-solid fa-users"></i> Audience Research</h3>
+          <ul>
+            <li>Identify Target Audience<br><span style="font-size:12px; margin-top:4px; display:inline-block; color:var(--green);"><i class="fa-solid fa-user-graduate"></i> Students &nbsp;&nbsp; <i class="fa-solid fa-user-group"></i> Parents &nbsp;&nbsp; <i class="fa-solid fa-graduation-cap"></i> Alumni</span></li>
+            <li>Analyze Competitors</li>
+            <li>Create a Monthly Content Calendar</li>
+          </ul>
+        </div>
+        <div class="simple-card accent-green">
+          <h3><i class="fa-solid fa-chart-line"></i> Engagement Strategy</h3>
+          <ul>
+            <li>Increase Profile Reach</li>
+            <li>Improve Impressions</li>
+            <li>Connect with the Audience</li>
+            <li>Respond to Comments &amp; DMs</li>
+            <li>Daily Story Updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTH 3 -->
+    <div class="month-block">
+      <button class="month-btn" data-month="3">MONTH 3</button>
+      <div class="month-content" id="content-3">
+        <div class="simple-card accent-orange">
+          <h3><i class="fa-solid fa-layer-group"></i> Content Types</h3>
+          <ul class="icon-list">
+            <li><i class="fa-solid fa-book-open fa-fw"></i> Educational Posts</li>
+            <li><i class="fa-brands fa-youtube fa-fw"></i> Reels</li>
+            <li><i class="fa-regular fa-calendar-plus fa-fw"></i> Event Coverage</li>
+            <li><i class="fa-solid fa-trophy fa-fw"></i> Student Achievements</li>
+            <li><i class="fa-solid fa-chalkboard-user fa-fw"></i> Faculty Introductions</li>
+            <li><i class="fa-solid fa-school fa-fw"></i> Campus Tours</li>
+            <li><i class="fa-solid fa-bullhorn fa-fw"></i> Admission Updates</li>
+            <li><i class="fa-solid fa-star fa-fw"></i> Testimonials</li>
+            <li><i class="fa-solid fa-circle-plus fa-fw"></i> Stories</li>
+          </ul>
+        </div>
+        <div class="simple-card accent-orange">
+          <h3><i class="fa-regular fa-calendar-alt"></i> Posting Schedule</h3>
+          <ul class="icon-list">
+            <li><i class="fa-regular fa-image fa-fw"></i> Regular Posts</li>
+            <li><i class="fa-solid fa-play fa-fw"></i> Reels</li>
+            <li><i class="fa-solid fa-circle-notch fa-fw"></i> Stories</li>
+            <li><i class="fa-solid fa-users fa-fw"></i> Community Engagement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRY MONTH -->
+    <div class="month-block">
+      <button class="month-btn" data-month="4">ENTRY MONTH</button>
+      <div class="month-content" id="content-4">
+        <div class="simple-card accent-blue">
+          <h3><i class="fa-solid fa-rotate"></i> Ongoing Every Month</h3>
+          <div class="ongoing-list">
+            <div class="ongoing-item"><i class="fa-regular fa-calendar ongoing-icon"></i> Content Planning</div>
+            <div class="ongoing-item"><i class="fa-solid fa-pen-nib ongoing-icon"></i> Graphic Designing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-film ongoing-icon"></i> Reel Editing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-file-lines ongoing-icon"></i> Caption Writing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-hashtag ongoing-icon"></i> Hashtag Research</div>
+            <div class="ongoing-item"><i class="fa-regular fa-calendar-check ongoing-icon"></i> Posting &amp; Scheduling</div>
+            <div class="ongoing-item"><i class="fa-solid fa-users ongoing-icon"></i> Community Management</div>
+            <div class="ongoing-item"><i class="fa-solid fa-chart-pie ongoing-icon"></i> Monthly Performance Report</div>
+            <div class="ongoing-item"><i class="fa-solid fa-arrow-trend-up ongoing-icon"></i> Strategy Improvement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <i class="fa-solid fa-school" style="font-size: 48px; opacity: 0.3;"></i>
+    <div style="flex: 1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px;">
+      <div class="tagline">CONSISTENT CONTENT.<br>STRONG ENGAGEMENT.<br>LASTING IMPACT.</div>
+      <div class="quote">"Our goal is to build a strong digital presence that reflects your institution's values, connects with your audience and drives real results."</div>
+    </div>
+    <i class="fa-solid fa-graduation-cap" style="font-size: 48px; opacity: 0.3;"></i>
+  </div>
+
+<script>
+  const buttons = document.querySelectorAll('.month-btn');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const month = btn.getAttribute('data-month');
+      const content = document.getElementById('content-' + month);
+      const isOpen = content.classList.contains('open');
+
+      // Toggle this specific accordion section independently
+      if (isOpen) {
+        btn.classList.remove('active');
+        content.classList.remove('open');
+      } else {
+        btn.classList.add('active');
+        content.classList.add('open');
+      }
+    });
+  });
+
+  // ===== Step flow logic for Month 1 =====
+  // Steps already reached (<= current) stay visible: earlier ones shrink to a
+  // small collapsed card, the current one stays fully expanded.
+  const stepItems1 = {
+    1: document.getElementById('step1'),
+    2: document.getElementById('step2'),
+    3: document.getElementById('step3')
+  };
+  const stepCircle1 = document.getElementById('stepCircle1');
+
+  function goToStep1(step) {
+    const dots = document.querySelectorAll('#stepDots1 .dot');
+
+    [1, 2, 3].forEach(n => {
+      const el = stepItems1[n];
+      el.classList.remove('gone', 'expanded', 'collapsed');
+      if (n <= step) {
+        el.classList.add('expanded');        // current and previous steps: full detail
+        if (n === step) {
+          setTimeout(() => {
+            const flow = document.getElementById('stepFlow1');
+            flow.scrollTo({ left: el.offsetLeft - 10, behavior: 'smooth' });
+          }, 50);
+        }
+      } else {
+        el.classList.add('gone');            // not reached yet: not shown
+      }
+    });
+
+    dots.forEach(d => {
+      d.classList.toggle('active', Number(d.getAttribute('data-goto')) === step);
+    });
+
+    if (step < 3) {
+      stepCircle1.textContent = 'Step ' + (step + 1);
+      stepCircle1.setAttribute('data-next', step + 1);
+      stepCircle1.classList.remove('hidden');
+    } else {
+      stepCircle1.classList.add('hidden');
+    }
+  }
+
+  // Clicking a collapsed step lets you jump straight back to it
+  document.querySelectorAll('.step-item').forEach(el => {
+    el.addEventListener('click', () => {
+      if (el.classList.contains('collapsed')) {
+        goToStep1(Number(el.getAttribute('data-step')));
+      }
+    });
+  });
+
+  stepCircle1.addEventListener('click', () => {
+    goToStep1(Number(stepCircle1.getAttribute('data-next')));
+  });
+
+  document.querySelectorAll('#stepDots1 .dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      goToStep1(Number(dot.getAttribute('data-goto')));
+    });
+  });
+</script>
+
+</body>
+</html>
