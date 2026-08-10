@@ -60,13 +60,45 @@
     .marquee-track{ animation: none; }
   }
 
-  /* ===== Vertical Stack ===== */
-  .stack{
+  /* ===== Columns Layout ===== */
+  .columns-container {
     flex: 1;
     width: 100%;
-    max-width:1100px;
-    margin:40px auto 60px;
-    padding:0 20px;
+    max-width: 1600px;
+    margin: 30px auto 60px;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  .column {
+    flex: 1 1 450px;
+    min-width: 0;
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    border: 1px solid #e3e6f0;
+  }
+  .column-title {
+    text-align: center;
+    color: var(--blue-dark);
+    font-size: 26px;
+    margin-top: 0;
+    margin-bottom: 30px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  
+  /* ===== Vertical Stack ===== */
+  .stack{
+    width: 100%;
+    margin: 0 auto;
   }
 
   .month-block{
@@ -124,6 +156,7 @@
     scroll-snap-type: x mandatory;
     padding-bottom: 10px;
     scrollbar-width: none; /* Firefox */
+    width: 100%;
   }
   .step-flow::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
@@ -365,15 +398,18 @@
     </div>
   </div>
 
+  <div class="columns-container">
+    <div class="column">
+      <h2 class="column-title"><i class="fa-solid fa-school"></i> SCHOOL</h2>
   <!-- Vertical accordion stack -->
   <div class="stack">
 
     <!-- MONTH 1 -->
     <div class="month-block">
-      <button class="month-btn" data-month="1">MONTH 1</button>
-      <div class="month-content" id="content-1">
-        <div class="step-flow" id="stepFlow1">
-          <div class="step-item expanded" id="step1" data-step="1">
+      <button class="month-btn" data-target="school-content-1">MONTH 1</button>
+      <div class="month-content" id="school-content-1">
+        <div class="step-flow" id="school-stepFlow1">
+          <div class="step-item expanded" id="school-step1" data-step="1">
             <span class="step-short">Step 1</span>
             <h3><i class="fa-solid fa-gear"></i> Step 1: Platform Setup</h3>
             <div class="step-detail">
@@ -393,7 +429,7 @@
               </ul>
             </div>
           </div>
-          <div class="step-item gone" id="step2" data-step="2">
+          <div class="step-item gone" id="school-step2" data-step="2">
             <span class="step-short">Step 2</span>
             <h3><i class="fa-solid fa-user"></i> Step 2: Profile Optimization</h3>
             <div class="step-detail">
@@ -415,7 +451,7 @@
               </ul>
             </div>
           </div>
-          <div class="step-item gone" id="step3" data-step="3">
+          <div class="step-item gone" id="school-step3" data-step="3">
             <span class="step-short">Step 3</span>
             <h3><i class="fa-solid fa-pencil"></i> Step 3: Initial Content</h3>
             <div class="step-detail">
@@ -427,9 +463,9 @@
               </ul>
             </div>
           </div>
-          <button class="step-circle" id="stepCircle1" data-next="2">Step 2</button>
+          <button class="step-circle" id="school-stepCircle1" data-next="2">Step 2</button>
         </div>
-        <div class="step-dots" id="stepDots1">
+        <div class="step-dots" id="school-stepDots1">
           <span class="dot active" data-goto="1">1</span>
           <span class="dot" data-goto="2">2</span>
           <span class="dot" data-goto="3">3</span>
@@ -439,8 +475,8 @@
 
     <!-- MONTH 2 -->
     <div class="month-block">
-      <button class="month-btn" data-month="2">MONTH 2</button>
-      <div class="month-content" id="content-2">
+      <button class="month-btn" data-target="school-content-2">MONTH 2</button>
+      <div class="month-content" id="school-content-2">
         <div class="simple-card accent-green">
           <h3><i class="fa-solid fa-users"></i> Audience Research</h3>
           <ul>
@@ -464,8 +500,8 @@
 
     <!-- MONTH 3 -->
     <div class="month-block">
-      <button class="month-btn" data-month="3">MONTH 3</button>
-      <div class="month-content" id="content-3">
+      <button class="month-btn" data-target="school-content-3">MONTH 3</button>
+      <div class="month-content" id="school-content-3">
         <div class="simple-card accent-orange">
           <h3><i class="fa-solid fa-layer-group"></i> Content Types</h3>
           <ul class="icon-list">
@@ -494,8 +530,8 @@
 
     <!-- ENTRY MONTH -->
     <div class="month-block">
-      <button class="month-btn" data-month="4">ENTRY MONTH</button>
-      <div class="month-content" id="content-4">
+      <button class="month-btn" data-target="school-content-4">ENTRY MONTH</button>
+      <div class="month-content" id="school-content-4">
         <div class="simple-card accent-blue">
           <h3><i class="fa-solid fa-rotate"></i> Ongoing Every Month</h3>
           <div class="ongoing-list">
@@ -515,6 +551,161 @@
 
   </div>
 
+    </div>
+    <div class="column">
+      <h2 class="column-title"><i class="fa-solid fa-dumbbell"></i> GYM</h2>
+  <!-- Vertical accordion stack -->
+  <div class="stack">
+
+    <!-- MONTH 1 -->
+    <div class="month-block">
+      <button class="month-btn" data-target="gym-content-1">MONTH 1</button>
+      <div class="month-content" id="gym-content-1">
+        <div class="step-flow" id="gym-stepFlow1">
+          <div class="step-item expanded" id="gym-step1" data-step="1">
+            <span class="step-short">Step 1</span>
+            <h3><i class="fa-solid fa-gear"></i> Step 1: Platform Setup</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Create/Optimize Instagram Professional Account</li>
+                <li>Create/Optimize Facebook Business Page</li>
+                <li>Complete Profile Information
+                  <ul>
+                    <li>Logo</li>
+                    <li>Bio</li>
+                    <li>Contact Details</li>
+                    <li>Website Link</li>
+                    <li>Address</li>
+                  </ul>
+                </li>
+                <li>Add CTA Buttons (Call, WhatsApp, Email etc.)</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-item gone" id="gym-step2" data-step="2">
+            <span class="step-short">Step 2</span>
+            <h3><i class="fa-solid fa-user"></i> Step 2: Profile Optimization</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Design Profile Picture &amp; Cover Image</li>
+                <li>Create Instagram Highlight Covers</li>
+                <li>Organize Highlights
+                  <ul>
+                    <li>Memberships</li>
+                    <li>Equipment</li>
+                    <li>Transformations</li>
+                    <li>Classes</li>
+                    <li>Client Results</li>
+                    <li>Testimonials</li>
+                  </ul>
+                </li>
+                <li>Set up Link in Bio</li>
+                <li>Create Branded Story Highlights</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step-item gone" id="gym-step3" data-step="3">
+            <span class="step-short">Step 3</span>
+            <h3><i class="fa-solid fa-pencil"></i> Step 3: Initial Content</h3>
+            <div class="step-detail">
+              <ul>
+                <li>Design Welcome Posts</li>
+                <li>Upload Introductory Stories</li>
+                <li>Fill Highlights with Useful Information</li>
+                <li>Make the Profile Look Complete &amp; Trustworthy Before Promotion</li>
+              </ul>
+            </div>
+          </div>
+          <button class="step-circle" id="gym-stepCircle1" data-next="2">Step 2</button>
+        </div>
+        <div class="step-dots" id="gym-stepDots1">
+          <span class="dot active" data-goto="1">1</span>
+          <span class="dot" data-goto="2">2</span>
+          <span class="dot" data-goto="3">3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTH 2 -->
+    <div class="month-block">
+      <button class="month-btn" data-target="gym-content-2">MONTH 2</button>
+      <div class="month-content" id="gym-content-2">
+        <div class="simple-card accent-green">
+          <h3><i class="fa-solid fa-users"></i> Audience Research</h3>
+          <ul>
+            <li>Identify Target Audience<br><span style="font-size:12px; margin-top:4px; display:inline-block; color:var(--green);"><i class="fa-solid fa-user-graduate"></i> Students &nbsp;&nbsp; <i class="fa-solid fa-user-group"></i> Parents &nbsp;&nbsp; <i class="fa-solid fa-graduation-cap"></i> Alumni</span></li>
+            <li>Analyze Competitors</li>
+            <li>Create a Monthly Content Calendar</li>
+          </ul>
+        </div>
+        <div class="simple-card accent-green">
+          <h3><i class="fa-solid fa-chart-line"></i> Engagement Strategy</h3>
+          <ul>
+            <li>Increase Profile Reach</li>
+            <li>Improve Impressions</li>
+            <li>Connect with the Audience</li>
+            <li>Respond to Comments &amp; DMs</li>
+            <li>Daily Story Updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- MONTH 3 -->
+    <div class="month-block">
+      <button class="month-btn" data-target="gym-content-3">MONTH 3</button>
+      <div class="month-content" id="gym-content-3">
+        <div class="simple-card accent-orange">
+          <h3><i class="fa-solid fa-layer-group"></i> Content Types</h3>
+          <ul class="icon-list">
+            <li><i class="fa-solid fa-book-open fa-fw"></i> Educational Posts</li>
+            <li><i class="fa-brands fa-youtube fa-fw"></i> Reels</li>
+            <li><i class="fa-regular fa-calendar-plus fa-fw"></i> Event Coverage</li>
+            <li><i class="fa-solid fa-trophy fa-fw"></i> Student Achievements</li>
+            <li><i class="fa-solid fa-chalkboard-user fa-fw"></i> Faculty Introductions</li>
+            <li><i class="fa-solid fa-school fa-fw"></i> Campus Tours</li>
+            <li><i class="fa-solid fa-bullhorn fa-fw"></i> Admission Updates</li>
+            <li><i class="fa-solid fa-star fa-fw"></i> Testimonials</li>
+            <li><i class="fa-solid fa-circle-plus fa-fw"></i> Stories</li>
+          </ul>
+        </div>
+        <div class="simple-card accent-orange">
+          <h3><i class="fa-regular fa-calendar-alt"></i> Posting Schedule</h3>
+          <ul class="icon-list">
+            <li><i class="fa-regular fa-image fa-fw"></i> Regular Posts</li>
+            <li><i class="fa-solid fa-play fa-fw"></i> Reels</li>
+            <li><i class="fa-solid fa-circle-notch fa-fw"></i> Stories</li>
+            <li><i class="fa-solid fa-users fa-fw"></i> Community Engagement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRY MONTH -->
+    <div class="month-block">
+      <button class="month-btn" data-target="gym-content-4">ENTRY MONTH</button>
+      <div class="month-content" id="gym-content-4">
+        <div class="simple-card accent-blue">
+          <h3><i class="fa-solid fa-rotate"></i> Ongoing Every Month</h3>
+          <div class="ongoing-list">
+            <div class="ongoing-item"><i class="fa-regular fa-calendar ongoing-icon"></i> Content Planning</div>
+            <div class="ongoing-item"><i class="fa-solid fa-pen-nib ongoing-icon"></i> Graphic Designing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-film ongoing-icon"></i> Reel Editing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-file-lines ongoing-icon"></i> Caption Writing</div>
+            <div class="ongoing-item"><i class="fa-solid fa-hashtag ongoing-icon"></i> Hashtag Research</div>
+            <div class="ongoing-item"><i class="fa-regular fa-calendar-check ongoing-icon"></i> Posting &amp; Scheduling</div>
+            <div class="ongoing-item"><i class="fa-solid fa-users ongoing-icon"></i> Community Management</div>
+            <div class="ongoing-item"><i class="fa-solid fa-chart-pie ongoing-icon"></i> Monthly Performance Report</div>
+            <div class="ongoing-item"><i class="fa-solid fa-arrow-trend-up ongoing-icon"></i> Strategy Improvement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+    </div>
+  </div>
   <!-- Footer -->
   <div class="footer">
     <i class="fa-solid fa-school" style="font-size: 48px; opacity: 0.3;"></i>
@@ -526,15 +717,15 @@
   </div>
 
 <script>
+  // Accordion Logic
   const buttons = document.querySelectorAll('.month-btn');
-
   buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      const month = btn.getAttribute('data-month');
-      const content = document.getElementById('content-' + month);
+      const targetId = btn.getAttribute('data-target');
+      const content = document.getElementById(targetId);
+      if(!content) return;
       const isOpen = content.classList.contains('open');
 
-      // Toggle this specific accordion section independently
       if (isOpen) {
         btn.classList.remove('active');
         content.classList.remove('open');
@@ -545,66 +736,63 @@
     });
   });
 
-  // ===== Step flow logic for Month 1 =====
-  // Steps already reached (<= current) stay visible: earlier ones shrink to a
-  // small collapsed card, the current one stays fully expanded.
-  const stepItems1 = {
-    1: document.getElementById('step1'),
-    2: document.getElementById('step2'),
-    3: document.getElementById('step3')
-  };
-  const stepCircle1 = document.getElementById('stepCircle1');
+  // Step Flow Logic (Generic for any prefix)
+  function setupStepFlow(prefix) {
+    const stepItems = {
+      1: document.getElementById(prefix + 'step1'),
+      2: document.getElementById(prefix + 'step2'),
+      3: document.getElementById(prefix + 'step3')
+    };
+    const stepCircle = document.getElementById(prefix + 'stepCircle1');
+    const flowContainer = document.getElementById(prefix + 'stepFlow1');
+    const dots = document.querySelectorAll('#' + prefix + 'stepDots1 .dot');
 
-  function goToStep1(step) {
-    const dots = document.querySelectorAll('#stepDots1 .dot');
+    if (!stepCircle || !flowContainer) return;
 
-    [1, 2, 3].forEach(n => {
-      const el = stepItems1[n];
-      el.classList.remove('gone', 'expanded', 'collapsed');
-      if (n <= step) {
-        el.classList.add('expanded');        // current and previous steps: full detail
-        if (n === step) {
-          setTimeout(() => {
-            const flow = document.getElementById('stepFlow1');
-            flow.scrollTo({ left: el.offsetLeft - 10, behavior: 'smooth' });
-          }, 50);
+    function goToStep(step) {
+      [1, 2, 3].forEach(n => {
+        const el = stepItems[n];
+        if(!el) return;
+        el.classList.remove('gone', 'expanded', 'collapsed');
+        if (n <= step) {
+          el.classList.add('expanded');
+          if (n === step) {
+            setTimeout(() => {
+              flowContainer.scrollTo({ left: el.offsetLeft - 10, behavior: 'smooth' });
+            }, 50);
+          }
+        } else {
+          el.classList.add('gone');
         }
+      });
+
+      dots.forEach(d => {
+        d.classList.toggle('active', Number(d.getAttribute('data-goto')) === step);
+      });
+
+      if (step < 3) {
+        stepCircle.textContent = 'Step ' + (step + 1);
+        stepCircle.setAttribute('data-next', step + 1);
+        stepCircle.classList.remove('hidden');
       } else {
-        el.classList.add('gone');            // not reached yet: not shown
+        stepCircle.classList.add('hidden');
       }
-    });
-
-    dots.forEach(d => {
-      d.classList.toggle('active', Number(d.getAttribute('data-goto')) === step);
-    });
-
-    if (step < 3) {
-      stepCircle1.textContent = 'Step ' + (step + 1);
-      stepCircle1.setAttribute('data-next', step + 1);
-      stepCircle1.classList.remove('hidden');
-    } else {
-      stepCircle1.classList.add('hidden');
     }
+
+    stepCircle.addEventListener('click', () => {
+      goToStep(Number(stepCircle.getAttribute('data-next')));
+    });
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        goToStep(Number(dot.getAttribute('data-goto')));
+      });
+    });
   }
 
-  // Clicking a collapsed step lets you jump straight back to it
-  document.querySelectorAll('.step-item').forEach(el => {
-    el.addEventListener('click', () => {
-      if (el.classList.contains('collapsed')) {
-        goToStep1(Number(el.getAttribute('data-step')));
-      }
-    });
-  });
-
-  stepCircle1.addEventListener('click', () => {
-    goToStep1(Number(stepCircle1.getAttribute('data-next')));
-  });
-
-  document.querySelectorAll('#stepDots1 .dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      goToStep1(Number(dot.getAttribute('data-goto')));
-    });
-  });
+  // Initialize both flows
+  setupStepFlow('school-');
+  setupStepFlow('gym-');
 </script>
 
 </body>
