@@ -161,6 +161,48 @@
   .step-flow::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
+  .insta-link {
+    text-decoration: none;
+    display: inline-block;
+  }
+  .insta-card {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: white; 
+    padding: 15px 30px; 
+    border-radius: 30px; 
+    font-weight: 600; 
+    font-size: 18px; 
+    box-shadow: 0 6px 20px rgba(220, 39, 67, 0.25); 
+    display: flex; 
+    align-items: center; 
+    gap: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .insta-link:hover .insta-card {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(220, 39, 67, 0.4);
+  }
+  .portfolio-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .portfolio-links {
+      flex-direction: column;
+      align-items: center;
+    }
+    .insta-link {
+      width: 100%;
+    }
+    .link-1 { max-width: 320px; }
+    .link-2 { max-width: 270px; }
+    .link-3 { max-width: 230px; }
+    .insta-card {
+      justify-content: center;
+    }
+  }
   .step-item{
     background:#fff;
     border:2px solid var(--purple);
@@ -763,6 +805,42 @@
 
     </div>
   </div>
+
+  <!-- PORTFOLIO SECTION -->
+  <div class="portfolio-container" style="max-width: 1600px; margin: 0 auto 60px; padding: 0 20px; text-align: center;">
+    <h2 style="color: var(--blue-dark); font-size: 28px; font-weight: 800; letter-spacing: 1px; margin-bottom: 30px;">
+      <i class="fa-solid fa-handshake"></i> Brands We Proudly Manage
+    </h2>
+    <style>
+      @media (max-width: 768px) {
+        .link-1 { max-width: 300px; }
+        .link-2 { max-width: 250px; }
+        .link-3 { max-width: 200px; }
+      }
+    </style>
+    <div class="portfolio-links">
+      
+      <a href="https://www.instagram.com/projectfitness_aliganj?igsh=NzM2Y2hlcWZndDU3" target="_blank" class="insta-link link-1">
+        <div class="insta-card">
+          <i class="fa-brands fa-instagram" style="font-size: 24px;"></i> Project Fitness 
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/fusionfitgymgomtinagar?igsh=MXU3ajlyMW9veHpreA==" target="_blank" class="insta-link link-2">
+        <div class="insta-card">
+          <i class="fa-brands fa-instagram" style="font-size: 24px;"></i> Fusion Fit 
+        </div>
+      </a>
+
+      <a href="https://www.instagram.com/befit_lucknow?igsh=ZzJra2tpcGNqNTNt" target="_blank" class="insta-link link-3">
+        <div class="insta-card">
+          <i class="fa-brands fa-instagram" style="font-size: 24px;"></i> BeFit 
+        </div>
+      </a>
+
+    </div>
+  </div>
+
   <!-- Footer -->
   <div class="footer">
     <i class="fa-solid fa-school" style="font-size: 48px; opacity: 0.3;"></i>
